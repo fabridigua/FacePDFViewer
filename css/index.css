@@ -1,0 +1,70 @@
+body{
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+}
+
+.pdf_section{
+    height: 100%;
+}
+#pdf_container{
+    display: none;
+}
+
+h1 { text-align: center; }
+
+.files input {
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    padding: 120px 0px 85px 35%;
+    text-align: center !important;
+    margin: 0;
+    width: 100% !important;
+}
+.files input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;
+}
+.files{ position:relative}
+.files:after {  pointer-events: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 50px;
+    right: 0;
+    height: 56px;
+    content: "";
+    background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
+    display: block;
+    margin: 0 auto;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.color input{ background-color:#f1f1f1;}
+
+.body_element{
+    display: block;
+    float: left;
+    height: 100%;
+    position: relative;
+}
+
+#pdf_viewer{
+    background: white;
+    width: 75%;
+}
+#command_panel{
+    background: black;
+    width: 25%;
+}
+
+#pdf_canvas{
+    height: 100%;
+    width: 100%;
+}

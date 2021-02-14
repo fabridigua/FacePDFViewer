@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Face Viewer</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet" />
+</head>
+<body>
+<div class="body_element" id="pdf_viewer">
+    <div class="pdf_section" id="pdf_opener">
+        <h1>Drag or select a PDF file</h1>
+        <form method="post" action="#" id="#">
+            <div class="form-group files">
+                <input type="file" id="file" />
+            </div>
+        </form>
+    </div>
+    <div  class="pdf_section" id="pdf_container">
+        <canvas id="pdf_canvas"></canvas>
+    </div>
+
+</div>
+<div class="body_element" id="command_panel">
+
+</div>
+</body>
+<script src="js/jquery-3.5.1.min.js"></script>
+<!--<script src="js/file_opener.js"></script>-->
+<!--<script src="js/pdf.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/build/pdf.min.js"></script>
+<script src="js/face-api.js"></script>
+<script src="js/index.js"></script>
+</html>
