@@ -1,8 +1,8 @@
 class FaceDetector {
     constructor(videoStream, canvas, options = {}) {
         this.options = {
-            buffer_len: (options.buffer_len !== undefined) ? options.buffer_len : 10,
-            buffer_thresh: (options.buffer_thresh !== undefined) ? options.buffer_thresh : 0.015,
+            buffer_len: (options.buffer_len !== undefined) ? options.buffer_len : 15,
+            buffer_thresh: (options.buffer_thresh !== undefined) ? options.buffer_thresh : 0.010,
             jaw_thresh: (options.jaw_thresh !== undefined) ? options.jaw_thresh : 5
         }
         this.stream = videoStream
@@ -12,7 +12,6 @@ class FaceDetector {
         // this.initStream()
         // faceapi.loadSsdMobilenetv1Model('./models')
         // faceapi.loadFaceLandmarkModel('./models')
-        console.log("loadSsdMobilenetv1Model ")
 
         this.cur_result = null
         this.poses_count = 0
@@ -28,7 +27,15 @@ class FaceDetector {
         // this.loadModels().then(function (){
         //     self.initStream()
         // })
+        this.moving = false // TODO use it to prevent making more than one movement
 
+        //TODO: UI: togliere upload e mettere URL con messaggio su github limit
+        // oppure pdf come esempi
+        //TODO: pensare a come permettere upload
+        // faccine sulla destra
+        // tutorial iniziale (scritto)
+        // ester egg sorriso
+        // pagina continua in altra pagina
     }
 
     // async detectFace() {
@@ -98,7 +105,9 @@ class FaceDetector {
         const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length
         if (self.poses_count === self.options.buffer_len) {
             self.nose_normal = avg(self.nose_buffer)
-            console.log("self.nose_normal " + self.nose_normal)
+            self.options.buffer_thresh = 0.15 * self.nose_normal
+            console.log("nose_normal " + self.nose_normal)
+            console.log("buffer_thresh" + self.options.buffer_thresh)
         }
 
         if (self.controller === null)
@@ -132,7 +141,7 @@ class FaceDetector {
 
 
         // console.log("this.changePage " + this.changePage)
-        console.log("jaw_left_y_dist " + jaw_left_y_dist + " | jaw_right_y_dist " + jaw_right_y_dist)
+        // console.log("jaw_left_y_dist " + jaw_left_y_dist + " | jaw_right_y_dist " + jaw_right_y_dist)
         if (eye_y_ratio > 10 * self.options.buffer_thresh) {
             // ZOOM
             console.log(eye_y_ratio)
@@ -162,7 +171,7 @@ class FaceDetector {
                 return
 
             const speed = - (self.nose_normal - buf_avg) / (self.options.buffer_thresh/2)
-            console.log("scroll(speed)")
+            // console.log("scroll(speed) "+speed +" <--- self.nose_normal - buf_avg " + (self.nose_normal - buf_avg))
             self.controller.scroll(speed)
         }
 

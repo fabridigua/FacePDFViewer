@@ -72,8 +72,8 @@ class PDFRender {
     }
 
     // TODO: render the whole PDF
-    renderPage(pageNumber) {
-        if (pageNumber === this.currPage)
+    renderPage(pageNumber, refresh = false) {
+        if (!refresh && pageNumber === this.currPage)
             return;
         if (this.pageRendering) {
             this.pageNumPending = pageNumber;
@@ -116,6 +116,11 @@ class PDFRender {
 
     zoom(isZoomOut){
         console.log("ZOOM: isZoomOut? "+isZoomOut)
+        if (isZoomOut)
+            this.options.scale = (this.options.scale > 0.4) ? this.options.scale - 0.2 : 0.4
+        else
+            this.options.scale = (this.options.scale < 2.0) ? this.options.scale + 0.2 : 2.0
+        this.renderPage(this.currPage, true)
     }
 
     scroll(speed){
