@@ -22,7 +22,7 @@ h1 { text-align: center; }
     outline-offset: -10px;
     -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
     transition: outline-offset .15s ease-in-out, background-color .15s linear;
-    padding: 120px 0px 85px 35%;
+    padding: 120px 0 85px 35%;
     text-align: center !important;
     margin: 0;
     width: 100% !important;
@@ -65,6 +65,27 @@ h1 { text-align: center; }
 }
 
 #pdf_canvas{
-    height: 100%;
+    border: gray 1px solid;
+    position: absolute;
+}
+
+#faceImg{
+    background: #8d2701;
+    height: 30%;
+    margin-left: 10%;
+    margin-top: 5%;
+    position: relative;
+    width: 80%;
+}
+
+#cameraImg{
+    /*background: #6ce315;*/
+    float: left;
+    height: 30%;
+    position: relative;
     width: 100%;
+
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
 }
