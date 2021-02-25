@@ -71,7 +71,7 @@ class PDFRender {
         });
     }
 
-    // TODO: render the whole PDF
+    // TODO: render the whole PDF FORSE
     renderPage(pageNumber, refresh = false) {
         if (!refresh && pageNumber === this.currPage)
             return;
@@ -97,14 +97,17 @@ class PDFRender {
             $(self.canvas).css("left", (parent_w/2 - self.canvas.width/2) + "px")
 
             // Render PDF page into canvas context
-            var renderContext = {
+            let renderContext = {
                 canvasContext:self.ctx,
                 viewport: viewport
             };
-            var renderTask = page.render(renderContext);
-            renderTask.promise.then(function() {
+
+
+
+            page.render(renderContext).promise.then(function() {
                 self.pageRendering = false;
                 self.detector.changePage = false
+                $("#pageNumb p").html(self.currPage + " of " +self.PDF.numPages)
                 if (self.pageNumPending !== null) {
                     self.renderPage(self.pageNumPending);
                     self.pageNumPending = null;
@@ -114,12 +117,16 @@ class PDFRender {
 
     }
 
-    zoom(isZoomOut){
-        console.log("ZOOM: isZoomOut? "+isZoomOut)
-        if (isZoomOut)
+    zoom(isZoomOut) {
+        console.log("ZOOM: isZoomOut? " + isZoomOut)
+        $("td p").removeClass("action_selected")
+        if (isZoomOut){
+            $("#scrollTiltRightTD p").addClass("action_selected")
             this.options.scale = (this.options.scale > 0.4) ? this.options.scale - 0.2 : 0.4
-        else
+        }else{
+            $("#scrollTiltLeftTD p").addClass("action_selected")
             this.options.scale = (this.options.scale < 2.0) ? this.options.scale + 0.2 : 2.0
+        }
         this.renderPage(this.currPage, true)
     }
 
@@ -130,6 +137,11 @@ class PDFRender {
         const parent_h = $(self.canvas.parentElement).height()
         if (canvas_h < parent_h)
             return
+
+        if (speed > 0)
+            $("#scrollUpTD p").addClass("action_selected")
+        else
+            $("#scrollDownTD p").addClass("action_selected")
 
         let top_limit = - Math.abs(canvas_h  - parent_h)
 

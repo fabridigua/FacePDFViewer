@@ -35,7 +35,7 @@ $(document).ready(function(){
             });
     })
 
-    $("#file").on("change", function (event){
+    $("#pdf_url_form a").on("click", function (event){
         // const value = event.target;
         // console.log("File: " + $(this).val())
         // console.log("File name: " + document.getElementById("file").files[0].name)
@@ -47,9 +47,16 @@ $(document).ready(function(){
         let canvas = document.getElementById('pdf_canvas')
         let url = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/lorem_ipsum.pdf';
 
+        let input_text = $("#pdf_url_form input").val()
+
+        if(input_text !== "")
+            url = input_text
+
         renderer = new PDFRender(canvas, url)
         renderer.detector = detector
         detector.controller = renderer
+
+        $("#actionsContainer").show()
 
     })
 

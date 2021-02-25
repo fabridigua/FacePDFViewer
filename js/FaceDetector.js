@@ -2,7 +2,7 @@ class FaceDetector {
     constructor(videoStream, canvas, options = {}) {
         this.options = {
             buffer_len: (options.buffer_len !== undefined) ? options.buffer_len : 15,
-            buffer_thresh: (options.buffer_thresh !== undefined) ? options.buffer_thresh : 0.010,
+            buffer_thresh: (options.buffer_thresh !== undefined) ? options.buffer_thresh : 0.015, // 0.010,
             jaw_thresh: (options.jaw_thresh !== undefined) ? options.jaw_thresh : 5
         }
         this.stream = videoStream
@@ -18,7 +18,7 @@ class FaceDetector {
         this.nose_buffer = []
 
         this.initialized = false
-        this.nose_normal = 0.75
+        this.nose_normal = 0.08
         this.changePage = false
 
         this.controller = null
@@ -27,7 +27,8 @@ class FaceDetector {
         // this.loadModels().then(function (){
         //     self.initStream()
         // })
-        this.moving = false // TODO use it to prevent making more than one movement
+        this.movingTimer = null // TODO use it to prevent making more than one movement
+        this.movingPage = false
 
         //TODO: UI: togliere upload e mettere URL con messaggio su github limit
         // oppure pdf come esempi
@@ -36,6 +37,7 @@ class FaceDetector {
         // tutorial iniziale (scritto)
         // ester egg sorriso
         // pagina continua in altra pagina
+        // sistemare flip immagine + coerenza versi movimenti
     }
 
     // async detectFace() {
@@ -105,10 +107,12 @@ class FaceDetector {
         const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length
         if (self.poses_count === self.options.buffer_len) {
             self.nose_normal = avg(self.nose_buffer)
-            self.options.buffer_thresh = 0.15 * self.nose_normal
+            self.options.buffer_thresh = 0.12 * self.nose_normal
             console.log("nose_normal " + self.nose_normal)
             console.log("buffer_thresh" + self.options.buffer_thresh)
         }
+
+        $("td p").removeClass("action_selected")
 
         if (self.controller === null)
             return
@@ -142,36 +146,57 @@ class FaceDetector {
 
         // console.log("this.changePage " + this.changePage)
         // console.log("jaw_left_y_dist " + jaw_left_y_dist + " | jaw_right_y_dist " + jaw_right_y_dist)
+        if (self.movingPage)
+            return
         if (eye_y_ratio > 10 * self.options.buffer_thresh) {
             // ZOOM
+            self.movingPage = true
+            self.movingTimer = setTimeout(function(){
+                self.movingPage = false
+            }, 1000)
             console.log(eye_y_ratio)
             // let page = self.controller.currPage
             // page = (point_42.y < point_47.y) ? page - 1 : page + 1
 
-            self.controller.zoom((point_42.y < point_47.y))
+            let zoomOut = (point_42.y < point_47.y)
+
+
+            self.controller.zoom(zoomOut)
         }
         else if (!this.changePage && jaw_left_y_dist < self.options.jaw_thresh){
             // Watching left page - 1
+            self.movingPage = true
+            self.movingTimer = setTimeout(function(){
+                self.movingPage = false
+            }, 1000)
             console.log("Change page left")
             let page = self.controller.currPage
+            $("#scrollLeftTD p").addClass("action_selected")
             page = (page > 1) ? page - 1 : 1
             self.controller.renderPage(page)
 
         }
         else if (!this.changePage && jaw_right_y_dist < self.options.jaw_thresh){
             // Watching right
+            self.movingPage = true
+            self.movingTimer = setTimeout(function(){
+                self.movingPage = false
+            }, 1000)
             console.log("Change page right")
             let page = self.controller.currPage + 1
+            $("#scrollRightTD p").addClass("action_selected")
             self.controller.renderPage(page)
         }
         else
         {
-            // Check buffer of noise len
-            if (Math.abs( self.nose_normal - buf_avg ) < self.options.buffer_thresh)
-                return
-
             const speed = - (self.nose_normal - buf_avg) / (self.options.buffer_thresh/2)
-            // console.log("scroll(speed) "+speed +" <--- self.nose_normal - buf_avg " + (self.nose_normal - buf_avg))
+            // Check buffer of noise len
+            if (Math.abs( self.nose_normal - buf_avg ) < self.options.buffer_thresh){
+                console.log("scroll(speed) "+speed +" <--- self.nose_normal - buf_avg " + (self.nose_normal - buf_avg))
+                return
+            }
+            // const speed = - (self.nose_normal - buf_avg) / (self.options.buffer_thresh/2)
+            console.log(" ---> scroll(speed) "+speed +" <--- self.nose_normal - buf_avg " + (self.nose_normal - buf_avg))
             self.controller.scroll(speed)
         }
 

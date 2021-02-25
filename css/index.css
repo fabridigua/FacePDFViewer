@@ -17,36 +17,45 @@ body{
 
 h1 { text-align: center; }
 
-.files input {
-    outline: 2px dashed #92b0b3;
-    outline-offset: -10px;
-    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
-    transition: outline-offset .15s ease-in-out, background-color .15s linear;
-    padding: 120px 0 85px 35%;
-    text-align: center !important;
-    margin: 0;
-    width: 100% !important;
-}
-.files input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;
-    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
-    transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;
-}
-.files{ position:relative}
-.files:after {  pointer-events: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 50px;
-    right: 0;
-    height: 56px;
-    content: "";
-    background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
-    display: block;
-    margin: 0 auto;
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
+/*.files input {*/
+/*    outline: 2px dashed #92b0b3;*/
+/*    outline-offset: -10px;*/
+/*    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;*/
+/*    transition: outline-offset .15s ease-in-out, background-color .15s linear;*/
+/*    padding: 120px 0 85px 35%;*/
+/*    text-align: center !important;*/
+/*    margin: 0;*/
+/*    width: 100% !important;*/
+/*}*/
+/*.files input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;*/
+/*    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;*/
+/*    transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;*/
+/*}*/
+/*.files{ position:relative}*/
+/*.files:after {  pointer-events: none;*/
+/*    position: absolute;*/
+/*    top: 60px;*/
+/*    left: 0;*/
+/*    width: 50px;*/
+/*    right: 0;*/
+/*    height: 56px;*/
+/*    content: "";*/
+/*    background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);*/
+/*    display: block;*/
+/*    margin: 0 auto;*/
+/*    background-size: 100%;*/
+/*    background-repeat: no-repeat;*/
+/*}
+
 .color input{ background-color:#f1f1f1;}
+*/
+
+#pdf_url{
+    width: 80%;
+    padding: 12px 20px;
+    margin-left: 10px;
+    box-sizing: border-box;
+}
 
 .body_element{
     display: block;
@@ -60,7 +69,8 @@ h1 { text-align: center; }
     width: 75%;
 }
 #command_panel{
-    background: black;
+    background: #303030;
+    color: #f1f1f1;
     width: 25%;
 }
 
@@ -88,4 +98,57 @@ h1 { text-align: center; }
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+#actionsTilte
+{
+    font-size: 1.2em;
+    text-align: center;
+}
+
+#legendGrid{
+    margin-left: 15%;
+    width: 70%;
+}
+
+#legendGrid img{
+    width: 45%;
+}
+
+#legendGrid td{
+    text-align: center;
+}
+
+#actionsContainer{
+    display: none;
+}
+
+.action_selected{
+    background: #ffe94ae0;
+    color: black;
+    font-weight: bold;
+}
+
+#pageNumb{
+    background: #00000063;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10%;
+    color: #fff;
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: bold;
+}
+
+#pdf_url_form a
+{
+    color: #fff;
+    padding: 1em;
+    border: navajowhite;
+    background-color: #313131;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
 }
