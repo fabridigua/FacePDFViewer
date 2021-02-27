@@ -77,7 +77,8 @@ function startUpload(){
         fd.append('file',files[0]);
 
         $.ajax({
-            url: 'http://facepdfviewer.altervista.org/upload.php',
+            // url: 'http://facepdfviewer.altervista.org/upload.php',
+            url: 'httpS://facepdfviewer.altervista.org/upload.php',
             type: 'post',
             data: fd,
             contentType: false,
