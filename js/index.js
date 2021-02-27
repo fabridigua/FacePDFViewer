@@ -6,6 +6,8 @@ let streaming = false
 
 $(document).ready(function(){
 
+    $("#but_upload").on("click",startUpload)
+
     let video = document.getElementById("cameraImg");
     let faceCanvas = document.getElementById("faceImg");
 
@@ -35,6 +37,7 @@ $(document).ready(function(){
             });
     })
 
+
     $("#pdf_url_form a").on("click", function (event){
         // const value = event.target;
         // sFN@A3l!c)7X%Q21KElA ||| +tRAyhN+j%40QdW[
@@ -63,6 +66,31 @@ $(document).ready(function(){
 
 
 });
+
+function startUpload(){
+    console.log("startUpload")
+    var fd = new FormData();
+    var files = $('#file')[0].files;
+
+    // Check file selected or not
+    if(files.length > 0 ){
+        fd.append('file',files[0]);
+
+        $.ajax({
+            url: 'http://facepdfviewer.altervista.org/upload.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function(response){
+                console.log(response)
+            },
+        });
+    }else{
+        alert("Please select a file.");
+    }
+}
+
 
 //
 // function initPDF(file_url=''){

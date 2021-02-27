@@ -17,11 +17,14 @@
             <a>Open</a>
         </form>
         <div id="warningDiv"><p>For security reason...</p></div>
-        <form action="http://facepdfviewer.altervista.org/upload.php" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" />
+<!--        <form action="http://facepdfviewer.altervista.org/upload.php"  method="post" enctype="multipart/form-data" target="upload_target" onsubmit="startUpload();" >-->
+        <form action=""  method="post" enctype="multipart/form-data" id="formfile" >
+            <input type="file" name="file" id="file" />
             <br />
-            <input type="submit" value="Upload" />
+            <input type="button" class="button" value="Upload" id="but_upload">
+<!--            <input type="submit" value="Upload" />-->
         </form>
+
     </div>
     <div  class="pdf_section" id="pdf_container">
         <div id="pageNumb"><p></p></div>
