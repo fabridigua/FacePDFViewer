@@ -142,6 +142,10 @@ h1 { text-align: center; }
     font-weight: bold;
 }
 
+label{
+    font-weight: bold;
+}
+
 #pdf_url_form a
 {
     color: #fff;

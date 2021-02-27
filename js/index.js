@@ -37,6 +37,7 @@ $(document).ready(function(){
 
     $("#pdf_url_form a").on("click", function (event){
         // const value = event.target;
+        // sFN@A3l!c)7X%Q21KElA ||| +tRAyhN+j%40QdW[
         // console.log("File: " + $(this).val())
         // console.log("File name: " + document.getElementById("file").files[0].name)
         // let name = document.getElementById("file").files[0].name

@@ -13,11 +13,16 @@
     <div class="pdf_section" id="pdf_opener">
         <h1>Insert the URL of a PDF file</h1>
         <form id="pdf_url_form">
-            <label for="pdf_url">PDF Url</label>
+            <label for="pdf_url">PDF URL</label>
             <input type="text" id="pdf_url" name="pdf_url">
             <a>Open</a>
         </form>
         <div id="warningDiv"><p>For security reason...</p></div>
+        <form action="https://facepdfviewer.000webhostapp.com/upload.php" method="post" enctype="multipart/form-data">
+            Select PDF File to upload:
+            <input type="file" name="fileToUpload" id="fileToUpload">
+            <input type="submit" value="Upload PDF" name="submit">
+        </form>
     </div>
     <div  class="pdf_section" id="pdf_container">
         <div id="pageNumb"><p></p></div>
