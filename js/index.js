@@ -45,8 +45,37 @@ $(document).ready(function(){
 
         let canvas = document.getElementById('pdf_canvas')
         let url = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/lorem_ipsum.pdf';
-        let url2 = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/Alice_Lewis_Carroll.pdf';
-        let url3 = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/Frankenstein_Mary_Shelley.pdf';
+
+        let input_text = $("#pdf_url_form input").val()
+
+        if(input_text !== "")
+            url = input_text
+
+        renderer = new PDFRender(canvas, url)
+        renderer.detector = detector
+        detector.controller = renderer
+
+        $("#actionsContainer").show()
+
+    })
+
+    $(".book_demo").on("click", function (){
+
+        $("#pdf_opener").hide()
+        $("#pdf_container").show()
+
+        console.log($(this).attr("id"))
+        let url = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/lorem_ipsum.pdf';
+        // let url2 = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/Alice_Lewis_Carroll.pdf';
+        // let url3 = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/Frankenstein_Mary_Shelley.pdf';
+
+        if ($(this).attr("id") === "alice_pdf")
+            url = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/Alice_Lewis_Carroll.pdf'
+        else if ($(this).attr("id") === "frank_pdf")
+            url = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/Frankenstein_Mary_Shelley.pdf'
+
+
+        let canvas = document.getElementById('pdf_canvas')
 
         let input_text = $("#pdf_url_form input").val()
 

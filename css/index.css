@@ -157,3 +157,29 @@ label{
     font-weight: bold;
     cursor: pointer;
 }
+#demo_title{
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.book_demo{
+    float: left;
+    width: 20%;
+    margin-left: 10%;
+    border: 2px solid #000;
+}
+
+.book_demo img{
+    display: block;
+    width: 100%;
+    position: relative;
+}
+
+#pdf_demos{
+    width: 90%;
+    margin-left: 5%;
+    height: 55%;
+    border: 1px solid #000;
+    margin-top: 1em;
+    padding: 1%;
+}

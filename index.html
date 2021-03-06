@@ -13,7 +13,7 @@
         <h1>Insert the URL of a PDF file</h1>
         <form id="pdf_url_form">
             <label for="pdf_url">PDF URL</label>
-            <input type="text" id="pdf_url" name="pdf_url" placeholder="Click Open to load the DEMO">
+            <input type="text" id="pdf_url" name="pdf_url" placeholder="Click Open to load the DEMO or insert a link from raw.githubusercontent.com">
             <a>Open</a>
         </form>
 <!--        <form action="http://facepdfviewer.altervista.org/upload.php"  method="post" enctype="multipart/form-data" target="upload_target" onsubmit="startUpload();" >-->
@@ -22,7 +22,12 @@
 <!--            <br />-->
 <!--            <input type="button" class="button" value="Upload" id="but_upload">-->
 <!--        </form>-->
-
+        <div id="pdf_demos">
+            <p id="demo_title">DEMO PDFs</p>
+            <div class="book_demo" id="lorem_pdf"><img src="imgs/lorem_ipsum.png"/></div>
+            <div class="book_demo" id="alice_pdf"><img src="imgs/alice.png"/></div>
+            <div class="book_demo" id="frank_pdf"><img src="imgs/frankestein.jpg"/></div>
+        </div>
     </div>
     <div  class="pdf_section" id="pdf_container">
         <div id="pageNumb"><p></p></div>
