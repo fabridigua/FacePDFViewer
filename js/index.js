@@ -45,8 +45,8 @@ $(document).ready(function(){
 
         let canvas = document.getElementById('pdf_canvas')
         let url = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/lorem_ipsum.pdf';
-        let url2 = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/lorem_ipsum.pdf';
-        let url3 = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/lorem_ipsum.pdf';
+        let url2 = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/Alice_Lewis_Carroll.pdf';
+        let url3 = 'https://raw.githubusercontent.com/fabridigua/FacePDFViewer/main/Frankenstein_Mary_Shelley.pdf';
 
         let input_text = $("#pdf_url_form input").val()
 
