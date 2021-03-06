@@ -1,14 +1,13 @@
 class FaceDetector {
     constructor(videoStream, canvas, options = {}) {
         this.options = {
-            useTiny: (options.useTiny !== undefined) ? options.useTiny : true,
+            useTiny: (options.useTiny !== undefined) ? options.useTiny : false,
             buffer_len: (options.buffer_len !== undefined) ? options.buffer_len : 15,
             buffer_thresh: (options.buffer_thresh !== undefined) ? options.buffer_thresh : 0.015, // 0.010,
             jaw_thresh: (options.jaw_thresh !== undefined) ? options.jaw_thresh : 5
         }
         this.stream = videoStream
         this.outCanvas = canvas
-        this.ghostCanvas = document.createElement('canvas')
 
         this.cur_result = null
         this.poses_count = 0
@@ -20,26 +19,10 @@ class FaceDetector {
 
         this.controller = null
 
-        // self = this
-        // this.loadModels().then(function (){
-        //     self.initStream()
-        // })
-        this.movingTimer = null // TODO use it to prevent making more than one movement
+        this.movingTimer = null
         this.movingPage = false
 
-        //TODO: UI: togliere upload e mettere URL con messaggio su github limit
-        // oppure pdf come esempi
-        //TODO: pensare a come permettere upload
-        // faccine sulla destra
-        // tutorial iniziale (scritto)
-        // ester egg sorriso
-        // pagina continua in altra pagina
-        // sistemare flip immagine + coerenza versi movimenti
     }
-
-    // async detectFace() {
-    //     return await faceapi.detectSingleFace(this.outCanvas)
-    // }
 
     async loadModels() {
         faceapi.loadSsdMobilenetv1Model('./models')
@@ -75,14 +58,9 @@ class FaceDetector {
                 faceCanvas.css("border-color","#4dff4d")
                 self.cur_result = result
                 let face = faceapi.resizeResults(result, { width: self.outCanvas.width, height: self.outCanvas.height })
-                // faceapi.draw.drawDetections(self.outCanvas, face)
+
                 faceapi.draw.drawFaceLandmarks(self.outCanvas, face)
-                // let a = {x: result.detection.box.topLeft.x, y: result.detection.box.topLeft.y}
-                // let b = {x: result.detection.box.bottomRight.x, y: result.detection.box.bottomRight.y}
-                // self.outCanvas.getContext('2d').drawImage(self.stream, a.x, a.y, b.x - a.x, b.y - a.y, 0, 0, self.outCanvas.width, self.outCanvas.height)
-                // cropAndDraw(a, b)
-                // console.log(cropped)
-                // self.outCanvas.getContext('2d').drawImage(cropped, 0, 0, self.outCanvas.width, self.outCanvas.height)
+
                 const point_1 = result.landmarks.positions[0]
                 const point_17 = result.landmarks.positions[16]
                 const point_34 = result.landmarks.positions[33]
@@ -90,7 +68,6 @@ class FaceDetector {
 
                 const zygomas_dist = Math.sqrt( Math.pow(point_1.x - point_17.x , 2) + Math.pow(point_1.y - point_17.y , 2)  )
                 const nose_len = Math.sqrt( Math.pow(point_34.x - point_31.x , 2) + Math.pow(point_34.y - point_31.y , 2)  )
-
                 const nose_ratio = nose_len / zygomas_dist
 
                 if (self.poses_count < self.options.buffer_len)
@@ -122,8 +99,6 @@ class FaceDetector {
             return
 
         const buf_avg = avg(self.nose_buffer)
-        // console.log("buf_avg "+ buf_avg)
-
 
         // Controllo la distannza in Y degli occhi, se è maggiore di una certa soglia guardo per un cambio pagina
         // Altrimenti controllo il nose buffer
@@ -199,7 +174,7 @@ class FaceDetector {
                 console.log("scroll(speed) "+speed +" <--- self.nose_normal - buf_avg " + (self.nose_normal - buf_avg))
                 return
             }
-            // const speed = - (self.nose_normal - buf_avg) / (self.options.buffer_thresh/2)
+
             console.log(" ---> scroll(speed) "+speed +" <--- self.nose_normal - buf_avg " + (self.nose_normal - buf_avg))
             self.controller.scroll(speed)
         }
