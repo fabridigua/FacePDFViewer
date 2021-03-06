@@ -68,10 +68,10 @@ $(document).ready(function(){
 });
 
 function startUpload(){
-    console.log("startUpload")
     var fd = new FormData();
     var files = $('#file')[0].files;
 
+    console.log("startUpload: " + files)
     // Check file selected or not
     if(files.length > 0 ){
         fd.append('file',files[0]);

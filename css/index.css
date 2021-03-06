@@ -80,12 +80,13 @@ h1 { text-align: center; }
 }
 
 #faceImg{
-    background: #8d2701;
+    background: #303030;
     height: 30%;
     margin-left: 10%;
     margin-top: 5%;
     position: relative;
     width: 80%;
+    border: 5px solid #303030;
 }
 
 #cameraImg{

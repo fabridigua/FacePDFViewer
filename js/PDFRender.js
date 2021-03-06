@@ -108,6 +108,8 @@ class PDFRender {
                 self.pageRendering = false;
                 self.detector.changePage = false
                 $("#pageNumb p").html(self.currPage + " of " +self.PDF.numPages)
+                self.top = 0
+                self.canvas.style.top = self.top + "px";
                 if (self.pageNumPending !== null) {
                     self.renderPage(self.pageNumPending);
                     self.pageNumPending = null;

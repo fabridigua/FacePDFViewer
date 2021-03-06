@@ -1,6 +1,7 @@
 class FaceDetector {
     constructor(videoStream, canvas, options = {}) {
         this.options = {
+            useTiny: (options.useTiny !== undefined) ? options.useTiny : true,
             buffer_len: (options.buffer_len !== undefined) ? options.buffer_len : 15,
             buffer_thresh: (options.buffer_thresh !== undefined) ? options.buffer_thresh : 0.015, // 0.010,
             jaw_thresh: (options.jaw_thresh !== undefined) ? options.jaw_thresh : 5
@@ -8,10 +9,6 @@ class FaceDetector {
         this.stream = videoStream
         this.outCanvas = canvas
         this.ghostCanvas = document.createElement('canvas')
-
-        // this.initStream()
-        // faceapi.loadSsdMobilenetv1Model('./models')
-        // faceapi.loadFaceLandmarkModel('./models')
 
         this.cur_result = null
         this.poses_count = 0
@@ -45,30 +42,37 @@ class FaceDetector {
     // }
 
     async loadModels() {
-        // await faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
-        // await faceapi.nets.faceLandmark68Net.loadFromUri('/models')
         faceapi.loadSsdMobilenetv1Model('./models')
         faceapi.loadFaceLandmarkModel('./models')
+        faceapi.loadTinyFaceDetectorModel('./models')
+        faceapi.loadFaceLandmarkTinyModel('./models')
     }
 
     async detectFaceLandmarks() {
-        return await faceapi.detectSingleFace(this.outCanvas).withFaceLandmarks()
+        if (this.options.useTiny)
+            return await faceapi.detectSingleFace(this.outCanvas, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks(true)
+        else
+            return await faceapi.detectSingleFace(this.outCanvas).withFaceLandmarks()
     }
 
     initStream() {
         let self = this
-
-        setInterval(function (){
-            // if (!self.initialized)
-            // {
-            //     self.initialized = true
-            //     self.outCanvas.getContext('2d').translate(self.outCanvas.width, 0);
-            //     self.outCanvas.getContext('2d').scale(-1, 1);
-            // }
+        self.scenes = 0
+        const faceCanvas = $("#faceImg")
+            setInterval(function (){
+            self.scenes += 1
             self.outCanvas.getContext('2d').drawImage(self.stream, 0, 0, self.outCanvas.width, self.outCanvas.height)
+            if (self.scenes %= 7 !== 0) {
+                // consider only one scene every 7
+                faceapi.draw.drawFaceLandmarks(self.outCanvas, faceapi.resizeResults(self.cur_result, { width: self.outCanvas.width, height: self.outCanvas.height }))
+                return
+            }
             self.detectFaceLandmarks().then(function ( result){
-                if (result === undefined || result.detection === undefined)
+                if (result === undefined || result.detection === undefined){
+                    faceCanvas.css("border-color","#ff4b4b")
                     return
+                }
+                faceCanvas.css("border-color","#4dff4d")
                 self.cur_result = result
                 let face = faceapi.resizeResults(result, { width: self.outCanvas.width, height: self.outCanvas.height })
                 // faceapi.draw.drawDetections(self.outCanvas, face)
